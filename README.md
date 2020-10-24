@@ -47,7 +47,7 @@ namespace Example
             
             // Configure API key authorization and get an Access Token
 
-	          AuthorizationApi instance;
+	    AuthorizationApi instance;
 
             try
             {

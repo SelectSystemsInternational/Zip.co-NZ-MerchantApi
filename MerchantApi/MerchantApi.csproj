@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Description>zipMoney MerchantApi C#</Description>
+    <Version>2.1.0.1</Version>
+    <PackageProjectUrl>https://github.com/users/SelectSystemsInternational/projects/19</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SelectSystemsInternational/ZipNZMerchantApi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Api\ChargesApi.cs" />
+    <Compile Remove="Api\SettlementsApi.cs" />
+    <Compile Remove="Api\TokensApi.cs" />
+    <Compile Remove="Model\Settlement.cs" />
+    <Compile Remove="Model\SettlementTransactions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0-rc.2.20475.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

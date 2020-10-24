@@ -1,4 +1,4 @@
-# Zip NZ MerchantApi - the C# Developers Library for the Merchant API
+# Zip NZ MerchantApi - C# Library for the Merchant API
 
 Zip.co New Zealand Merchant API Initial build
 

@@ -52,7 +52,7 @@ namespace Example
             try
             {
                 // Setup Authorization
-	              instance = new AuthorizationApi("https://merchant-auth-nz.sandbox.zip.co")
+	        instance = new AuthorizationApi("https://merchant-auth-nz.sandbox.zip.co")
                 instance.Configuration.ClientId = "Your Client Id";
                 instance.Configuration.ClientSecret = "Your Client Secret";
 

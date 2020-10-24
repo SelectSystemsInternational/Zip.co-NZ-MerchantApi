@@ -47,7 +47,7 @@ namespace Example
         public void main()
         {
             
-            // Configure API key authorization and get an Access Token
+            // Configure API key authorization, get an Access Token, Create an Order, Get an Order
 
 	    private AuthorizationApi authorizationApi;
 	    private OrdersApi ordersApi;
@@ -65,7 +65,7 @@ namespace Example
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ChargesApi.ChargesCancel: " + e.Message );
+                Debug.Print("Exception when calling AuthorizationApi: " + e.Message );
             }
 	        
 	    try
@@ -74,13 +74,16 @@ namespace Example
 		ordersApi = new OrdersApi("https://sandbox.zip.co/nz/api");
             	var createOrderRequest = CreateRequest(CreateOrderRequest.PaymentFlowEnum.Payment);
             	var createOrderResponse = ordersApi.OrderCreate(authorization, "Idempotency-Key", createOrderRequest);
-            	id = createOrderResponse.OrderId;	
+            	id = createOrderResponse.OrderId;
+		Debug.WriteLine(createOrderResponse);
+		
+		// Create Order
 		var order = ordersApi.OrderGet(id);
                 Debug.WriteLine(order);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling ChargesApi.ChargesCancel: " + e.Message );
+                Debug.Print("Exception when calling OrdersApi: " + e.Message );
             }
         }
     }

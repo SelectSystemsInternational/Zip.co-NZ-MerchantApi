@@ -47,19 +47,34 @@ namespace Example
             
             // Configure API key authorization and get an Access Token
 
-	    AuthorizationApi instance;
+	    private AuthorizationApi authorizationApi;
+	    private OrdersApi ordersApi;
 
             try
             {
                 // Setup Authorization
-	        instance = new AuthorizationApi("https://merchant-auth-nz.sandbox.zip.co")
-                instance.Configuration.ClientId = "Your Client Id";
-                instance.Configuration.ClientSecret = "Your Client Secret";
+	        authorizationApi = new AuthorizationApi("https://merchant-auth-nz.sandbox.zip.co")
+                authorizationApi.Configuration.ClientId = "Your Client Id";
+                authorizationApi.Configuration.ClientSecret = "Your Client Secret";
 
                 // Create Acces Token
-                var response = instance.AuthorizationCreateToken();
-
+                var response = authorizationApi.AuthorizationCreateToken();
                 Debug.WriteLine(response);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling ChargesApi.ChargesCancel: " + e.Message );
+            }
+	        
+	    try
+            {
+                // Create Order
+		ordersApi = new OrdersApi("https://sandbox.zip.co/nz/api");
+            	var createOrderRequest = CreateRequest(CreateOrderRequest.PaymentFlowEnum.Payment);
+            	var createOrderResponse = ordersApi.OrderCreate(authorization, "Idempotency-Key", createOrderRequest);
+            	id = createOrderResponse.OrderId;	
+		var order = ordersApi.OrderGet(id);
+                Debug.WriteLine(order);
             }
             catch (Exception e)
             {

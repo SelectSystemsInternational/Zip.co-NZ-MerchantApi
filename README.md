@@ -98,6 +98,4 @@ namespace MerchantApi.Example
 <a name="status"></a>
 ## Status of Library
 This is the inital build and is not yet complete:
-- Still to add Customer endpoints 
-- I will be building a nopCommerce plugin based on the Library and changes may be made over the coming weeks
-
+- Still to add Customer endpoints

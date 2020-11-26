@@ -102,7 +102,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Order</returns>
-        Order OrderGet(string id);
+        CheckoutOrder OrderGet(AccessToken accessToken, string id);
 
         /// <summary>
         /// Retrieve a Order
@@ -113,7 +113,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Order</returns>
-        ApiResponse<Order> OrderGetWithHttpInfo(string id);
+        ApiResponse<CheckoutOrder> OrderGetWithHttpInfo(string id);
 
         #endregion Synchronous Operations
 
@@ -149,7 +149,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of Order</returns>
-        System.Threading.Tasks.Task<Order> OrderGetAsync(string id);
+        System.Threading.Tasks.Task<CheckoutOrder> OrderGetAsync(string id);
 
         /// <summary>
         /// Retrieve a Order
@@ -160,7 +160,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Order>> OrderGetAsyncWithHttpInfo (string id);
+        System.Threading.Tasks.Task<ApiResponse<CheckoutOrder>> OrderGetAsyncWithHttpInfo (string id);
 
         #endregion Asynchronous Operations
     }
@@ -358,7 +358,7 @@ namespace MerchantApi.Api
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("OrderCreate", localVarResponse);
+                Exception exception = ExceptionFactory("OrderCreateWithHttpInfo", localVarResponse);
                 if (exception != null) throw exception;
             }
 
@@ -718,13 +718,16 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Order</returns>
-        public Order OrderGet (string id)
+        public CheckoutOrder OrderGet(AccessToken accessToken, string id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
                 throw new ApiException(400, "Missing required parameter 'id' when calling OrdersApi->OrderGet");
 
-            ApiResponse<Order> localVarResponse = OrderGetWithHttpInfo(id);
+            Configuration.AddApiKey("Authorization", accessToken.Token);
+            Configuration.AddApiKeyPrefix("Authorization", "Bearer");
+
+            ApiResponse<CheckoutOrder> localVarResponse = OrderGetWithHttpInfo(id);
             return localVarResponse.Data;
         }
 
@@ -734,7 +737,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Order</returns>
-        public ApiResponse<Order> OrderGetWithHttpInfo(string id)
+        public ApiResponse<CheckoutOrder> OrderGetWithHttpInfo(string id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -786,9 +789,9 @@ namespace MerchantApi.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<CheckoutOrder>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (CheckoutOrder) Configuration.ApiClient.Deserialize(localVarResponse, typeof(CheckoutOrder)));
             
         }
 
@@ -873,9 +876,9 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of Order</returns>
-        public async System.Threading.Tasks.Task<Order> OrderGetAsync(string id)
+        public async System.Threading.Tasks.Task<CheckoutOrder> OrderGetAsync(string id)
         {
-            ApiResponse<Order> localVarResponse = await OrderGetAsyncWithHttpInfo(id);
+            ApiResponse<CheckoutOrder> localVarResponse = await OrderGetAsyncWithHttpInfo(id);
             return localVarResponse.Data;
         }
 
@@ -885,7 +888,7 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse (Order)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Order>> OrderGetAsyncWithHttpInfo (string id)
+        public async System.Threading.Tasks.Task<ApiResponse<CheckoutOrder>> OrderGetAsyncWithHttpInfo (string id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -937,9 +940,9 @@ namespace MerchantApi.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Order>(localVarStatusCode,
+            return new ApiResponse<CheckoutOrder>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (Order) Configuration.ApiClient.Deserialize(localVarResponse, typeof(Order)));
+                (CheckoutOrder) Configuration.ApiClient.Deserialize(localVarResponse, typeof(CheckoutOrder)));
             
         }
 

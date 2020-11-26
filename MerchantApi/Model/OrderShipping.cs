@@ -35,7 +35,7 @@ namespace MerchantApi.Model
         /// <param name="Pickup">States if the shipping method is pickup, otherwise the shipping address should be provided.</param>
         /// <param name="Tracking">Tracking.</param>
         /// <param name="Address">Address.</param>
-        public OrderShipping(bool? Pickup = default(bool?), OrderShippingTracking Tracking = default(OrderShippingTracking), Address Address = default(Address))
+        public OrderShipping(bool? Pickup = default(bool?), OrderShippingTracking Tracking = default(OrderShippingTracking), OrderAddress Address = default(OrderAddress))
         {
             this.Pickup = Pickup;
             this.Tracking = Tracking;
@@ -57,7 +57,7 @@ namespace MerchantApi.Model
         /// Gets or Sets Address
         /// </summary>
         [DataMember(Name="address", EmitDefaultValue=false)]
-        public Address Address { get; set; }
+        public OrderAddress Address { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

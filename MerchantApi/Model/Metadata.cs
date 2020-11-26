@@ -73,6 +73,8 @@ namespace MerchantApi.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Metadata {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

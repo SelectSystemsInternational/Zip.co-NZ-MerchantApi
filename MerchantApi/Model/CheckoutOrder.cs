@@ -24,94 +24,235 @@ using System.ComponentModel.DataAnnotations;
 namespace MerchantApi.Model
 {
     /// <summary>
-    /// CheckoutOrder
+    /// Order
     /// </summary>
     [DataContract]
     public partial class CheckoutOrder :  IEquatable<CheckoutOrder>, IValidatableObject
     {
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckoutOrder" /> class.
+        /// The type of authority (checkout_id, account_token, store_code)
         /// </summary>
+        /// <value>The type of authority (checkout_id, account_token, store_code)</value>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum OrderStatusEnum
+        {
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Created")]
+            Created,
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Approved")]
+            Approved,
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Declined")]
+            Declined,
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Abandoned")]
+            Abandoned,
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Authorised")]
+            Authorised,
+            /// <summary>
+            /// Enum client_credentials for authorization token request
+            /// </summary>
+            [EnumMember(Value = "Expired")]
+            Expired
+        }
+
+        /// <summary>
+        /// The type of authority (client_credentials)
+        /// </summary>
+        /// <value>The type of authority (checkout_id, account_token, store_code)</value>
+        [DataMember(Name = "orderStatus", EmitDefaultValue = false)]
+        public OrderStatusEnum? OrderStatus { get; set; }
+
         [JsonConstructorAttribute]
         protected CheckoutOrder() { }
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckoutOrder" /> class.
         /// </summary>
-        /// <param name="Reference">The order id in the eCommerce system.</param>
-        /// <param name="Amount">The total amount of the order (required).</param>
-        /// <param name="Currency">The ISO-4217 currency code. See https://en.wikipedia.org/wiki/ISO_4217 (required).</param>
-        /// <param name="Shipping">Shipping (required).</param>
-        /// <param name="Items">The order item breakdown.</param>
-        /// <param name="CartReference">The shopping cart reference id.</param>
-        public CheckoutOrder(string Reference = default(string), decimal? Amount = default(decimal?), string Currency = default(string), OrderShipping Shipping = default(OrderShipping), List<OrderItem> Items = default(List<OrderItem>), string CartReference = default(string))
+        /// <param name="Token">Token (required).</param>
+        /// <param name="ExpiryDateTime">ExpiryDateTime (required).</param>
+        /// <param name="RedirectUrl">RedirectUrl.</param>
+        /// <param name="OrderId">OrderId.</param>
+        /// <param name="Warnings">Warnings.</param>
+        /// <param name="Errors">Errors (required).</param>
+        /// <param name="CustomerPairingTokenActive">CustomerPairingTokenActive.</param>
+        /// <param name="Metadata">Metadata.</param>
+        public CheckoutOrder(string OrderId = default(string), string OrderNumber = default(string), decimal? Amount = default(decimal?),
+            OrderConsumer Consumer = default(OrderConsumer), OrderAddress Billing = default(OrderAddress), OrderAddress Shipping = default(OrderAddress), string Description = default(string), 
+            List<OrderItem> Items = default(List<OrderItem>), Merchant Merchant = default(Merchant), string MerchantReference = default(string), 
+            decimal? TaxAmount = default(decimal?), decimal? ShippingAmount = default(decimal?), string Token = default(string), string[] Promotions = default(string[]),
+            decimal? CapturedAmount = default(decimal?), decimal? RefundedAmount = default(decimal?), DateTime? CreatedDateTime = default(DateTime?),
+            string RedirectUrl = default(string), Metadata Metadata = default(Metadata))
         {
-            // to ensure "Amount" is required (not null)
-            if (Amount == null)
+            // to ensure "OrderId" is required (not null)
+            if (OrderId == null)
             {
-                throw new InvalidDataException("Amount is a required property for CheckoutOrder and cannot be null");
+                throw new InvalidDataException("OrderId is a required property for Order and cannot be null");
             }
             else
             {
-                this.Amount = Amount;
+                this.OrderId = OrderId;
             }
-            // to ensure "Currency" is required (not null)
-            if (Currency == null)
+            // to ensure "OrderNumber" is required (not null)
+            if (OrderNumber == null)
             {
-                throw new InvalidDataException("Currency is a required property for CheckoutOrder and cannot be null");
+                throw new InvalidDataException("OrderNumber is a required property for Order and cannot be null");
             }
             else
             {
-                this.Currency = Currency;
+                this.OrderNumber = OrderNumber;
             }
-            // to ensure "Shipping" is required (not null)
-            if (Shipping == null)
+            // to ensure "Description" is required (not null)
+            if (Description == null)
             {
-                throw new InvalidDataException("Shipping is a required property for CheckoutOrder and cannot be null");
+                throw new InvalidDataException("Description is a required property for Order and cannot be null");
             }
             else
             {
-                this.Shipping = Shipping;
+                this.Description = Description;
             }
-            this.Reference = Reference;
+            // to ensure "MerchantReference" is required (not null)
+            if (MerchantReference == null)
+            {
+                throw new InvalidDataException("MerchantReference is a required property for Order and cannot be null");
+            }
+            else
+            {
+                this.MerchantReference = MerchantReference;
+            }
+            // to ensure "RedirectUrl" is required (not null)
+            if (RedirectUrl == null)
+            {
+                throw new InvalidDataException("RedirectUrl is a required property for Order and cannot be null");
+            }
+            else
+            {
+                this.RedirectUrl = RedirectUrl;
+            }
+            this.OrderStatus = OrderStatus;
+            this.Amount = Amount;
+            this.Consumer = Consumer;
+            this.Billing = Billing;
+            this.Shipping = Shipping;
             this.Items = Items;
-            this.CartReference = CartReference;
+            this.Merchant = Merchant;
+            this.TaxAmount = TaxAmount;
+            this.ShippingAmount = ShippingAmount;
+            this.Token = Token;
+            this.Promotions = Promotions;
+            this.CapturedAmount = CapturedAmount;
+            this.RefundedAmount = RefundedAmount;
+            this.CreatedDateTime = CreatedDateTime;
+            this.RedirectUrl = RedirectUrl;
+            this.Metadata = Metadata;
+
         }
-        
+
         /// <summary>
-        /// The order id in the eCommerce system
+        /// Gets or Sets Token
         /// </summary>
-        /// <value>The order id in the eCommerce system</value>
-        [DataMember(Name="reference", EmitDefaultValue=false)]
-        public string Reference { get; set; }
+        [DataMember(Name = "orderId", EmitDefaultValue = false)]
+        public string OrderId { get; set; }
         /// <summary>
-        /// The total amount of the order
+        /// Gets or Sets Token
         /// </summary>
-        /// <value>The total amount of the order</value>
+        [DataMember(Name = "orderNumber", EmitDefaultValue = false)]
+        public string OrderNumber { get; set; }
+        /// <summary>
+        /// Gets or Sets Amount
+        /// </summary>
         [DataMember(Name="amount", EmitDefaultValue=false)]
         public decimal? Amount { get; set; }
         /// <summary>
-        /// The ISO-4217 currency code. See https://en.wikipedia.org/wiki/ISO_4217
+        /// Gets or Sets Consumer
         /// </summary>
-        /// <value>The ISO-4217 currency code. See https://en.wikipedia.org/wiki/ISO_4217</value>
-        [DataMember(Name="currency", EmitDefaultValue=false)]
-        public string Currency { get; set; }
+        [DataMember(Name = "consumer", EmitDefaultValue = false)]
+        public OrderConsumer Consumer { get; set; }
         /// <summary>
-        /// Gets or Sets Shipping
+        /// Gets or Sets Billing Address
         /// </summary>
-        [DataMember(Name="shipping", EmitDefaultValue=false)]
-        public OrderShipping Shipping { get; set; }
+        [DataMember(Name= "billing", EmitDefaultValue=false)]
+        public OrderAddress Billing { get; set; }
         /// <summary>
-        /// The order item breakdown
+        /// Gets or Sets Shipping Address;
         /// </summary>
-        /// <value>The order item breakdown</value>
-        [DataMember(Name="items", EmitDefaultValue=false)]
+        [DataMember(Name = "shipping", EmitDefaultValue = false)]
+        public OrderAddress Shipping { get; set; }
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string Description { get; set; }
+        /// <summary>
+        /// Gets or Sets Items
+        /// </summary>
+        [DataMember(Name= "items", EmitDefaultValue=false)]
         public List<OrderItem> Items { get; set; }
         /// <summary>
-        /// The shopping cart reference id
+        /// Gets or Sets Merchant
         /// </summary>
-        /// <value>The shopping cart reference id</value>
-        [DataMember(Name="cart_reference", EmitDefaultValue=false)]
-        public string CartReference { get; set; }
+        [DataMember(Name= "merchant", EmitDefaultValue=false)]
+        public Merchant Merchant { get; set; }
+        /// <summary>
+        /// Gets or Sets MerchantReference
+        /// </summary>
+        [DataMember(Name = "merchantReference", EmitDefaultValue = false)]
+        public string MerchantReference { get; set; }
+        /// <summary>
+        /// Gets or Sets Tax Amount
+        /// </summary>
+        [DataMember(Name = "taxAmount", EmitDefaultValue = false)]
+        public decimal? TaxAmount { get; set; }
+        /// <summary>
+        /// Gets or Sets Shipping Amount
+        /// </summary>
+        [DataMember(Name = "shippingAmount", EmitDefaultValue = false)]
+        public decimal? ShippingAmount { get; set; }
+        /// <summary>
+        /// Gets or Sets Token
+        /// </summary>
+        [DataMember(Name = "token", EmitDefaultValue = false)]
+        public string Token { get; set; }
+        /// <summary>
+        /// Gets or Sets Promotions
+        /// </summary>
+        [DataMember(Name = "promotions", EmitDefaultValue = false)]
+        public string[] Promotions { get; set; }
+        /// <summary>
+        /// Gets or Sets Captured Amount
+        /// </summary>
+        [DataMember(Name = "capturedAmount", EmitDefaultValue = false)]
+        public decimal? CapturedAmount { get; set; }
+        /// <summary>
+        /// Gets or Sets Refunded Amount
+        /// </summary>
+        [DataMember(Name = "refundedAmount", EmitDefaultValue = false)]
+        public decimal? RefundedAmount { get; set; }
+        /// <summary>
+        /// Gets or Sets Created DateTime
+        /// </summary>
+        [DataMember(Name = "createdDateTime", EmitDefaultValue = false)]
+        DateTime? CreatedDateTime { get; set; }/// 
+                                              /// </summary>
+        [DataMember(Name = "redirectUrl", EmitDefaultValue = false)]
+        public string RedirectUrl { get; set; }
+        /// <summary>
+        /// Gets or Sets Metadata
+        /// </summary>
+        [DataMember(Name = "metadata", EmitDefaultValue = false)]
+        Metadata Metadata { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -119,13 +260,27 @@ namespace MerchantApi.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CheckoutOrder {\n");
-            sb.Append("  Reference: ").Append(Reference).Append("\n");
+            sb.Append("class Order {\n");
+            sb.Append("  OrderId: ").Append(OrderId).Append("\n");
+            sb.Append("  OrderNumber: ").Append(OrderNumber).Append("\n");
+            sb.Append("  OrderStatus: ").Append(OrderStatus).Append("\n");
             sb.Append("  Amount: ").Append(Amount).Append("\n");
-            sb.Append("  Currency: ").Append(Currency).Append("\n");
+            sb.Append("  Consumer: ").Append(Consumer).Append("\n");
+            sb.Append("  Billing: ").Append(Billing).Append("\n");
             sb.Append("  Shipping: ").Append(Shipping).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Items: ").Append(Items).Append("\n");
-            sb.Append("  CartReference: ").Append(CartReference).Append("\n");
+            sb.Append("  Merchant: ").Append(Merchant).Append("\n");
+            sb.Append("  MerchantReference: ").Append(MerchantReference).Append("\n");
+            sb.Append("  TaxAmount: ").Append(TaxAmount).Append("\n");
+            sb.Append("  ShippingAmount: ").Append(ShippingAmount).Append("\n");
+            sb.Append("  Token: ").Append(Token).Append("\n");
+            sb.Append("  Promotions: ").Append(Promotions).Append("\n");
+            sb.Append("  CapturedAmount: ").Append(CapturedAmount).Append("\n");
+            sb.Append("  RefundedAmount: ").Append(RefundedAmount).Append("\n");
+            sb.Append("  CreatedDateTime: ").Append(CreatedDateTime).Append("\n");
+            sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -147,13 +302,13 @@ namespace MerchantApi.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as CheckoutOrder);
+            return this.Equals(obj as CreateOrderRequest);
         }
 
         /// <summary>
-        /// Returns true if CheckoutOrder instances are equal
+        /// Returns true if Order instances are equal
         /// </summary>
-        /// <param name="other">Instance of CheckoutOrder to be compared</param>
+        /// <param name="other">Instance of Order to be compared</param>
         /// <returns>Boolean</returns>
         public bool Equals(CheckoutOrder other)
         {
@@ -161,38 +316,95 @@ namespace MerchantApi.Model
             if (other == null)
                 return false;
 
-            return 
+            return
                 (
-                    this.Reference == other.Reference ||
-                    this.Reference != null &&
-                    this.Reference.Equals(other.Reference)
+                    this.OrderId == other.OrderId ||
+                    this.OrderId != null &&
+                    this.OrderId.Equals(other.OrderId)
+                ) &&
+                (
+                    this.OrderNumber == other.OrderNumber ||
+                    this.OrderNumber != null &&
+                    this.OrderNumber.Equals(other.OrderNumber)
+                ) &&
+                (
+                    this.OrderStatus == other.OrderStatus ||
+                    this.OrderStatus.Equals(other.OrderStatus)
                 ) && 
                 (
                     this.Amount == other.Amount ||
-                    this.Amount != null &&
                     this.Amount.Equals(other.Amount)
+                ) &&
+                (
+                    this.Consumer == other.Consumer ||
+                    this.Consumer.Equals(other.Consumer)
                 ) && 
                 (
-                    this.Currency == other.Currency ||
-                    this.Currency != null &&
-                    this.Currency.Equals(other.Currency)
-                ) && 
+                    this.Billing == other.Billing ||
+                    this.Billing.Equals(other.Billing)
+                ) &&
                 (
                     this.Shipping == other.Shipping ||
-                    this.Shipping != null &&
                     this.Shipping.Equals(other.Shipping)
-                ) && 
+                ) &&
+                (
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
+                ) &&
                 (
                     this.Items == other.Items ||
-                    this.Items != null &&
-                    this.Items.SequenceEqual(other.Items)
+                    this.Items.Equals(other.Items)
                 ) && 
                 (
-                    this.CartReference == other.CartReference ||
-                    this.CartReference != null &&
-                    this.CartReference.Equals(other.CartReference)
+                    this.Merchant == other.Merchant ||
+                    this.Merchant.Equals(other.Merchant)
+                ) &&
+                (
+                    this.MerchantReference == other.MerchantReference ||
+                    this.MerchantReference != null &&
+                    this.MerchantReference.Equals(other.MerchantReference)
+                ) &&               
+                (
+                    this.TaxAmount == other.TaxAmount ||
+                    this.TaxAmount.Equals(other.TaxAmount)
+                ) &&
+                (
+                    this.ShippingAmount == other.ShippingAmount ||
+                    this.ShippingAmount.Equals(other.ShippingAmount)
+                ) &&
+                (
+                    this.Token == other.Token ||
+                    this.Token != null &&
+                    this.Token.Equals(other.Token)
+                ) &&
+                (
+                    this.Promotions == other.Promotions ||
+                    this.Promotions.Equals(other.Promotions)
+                ) &&
+                (
+                    this.CapturedAmount == other.CapturedAmount ||
+                    this.CapturedAmount.Equals(other.CapturedAmount)
+                ) &&
+                (
+                    this.RefundedAmount == other.RefundedAmount ||
+                    this.RefundedAmount.Equals(other.RefundedAmount)
+                ) &&
+                (
+                    this.CreatedDateTime == other.CreatedDateTime ||
+                    this.CreatedDateTime.Equals(other.CreatedDateTime)
+                ) &&
+                (
+                    this.RedirectUrl == other.RedirectUrl ||
+                    this.RedirectUrl != null &&
+                    this.RedirectUrl.Equals(other.RedirectUrl)
+                ) &&
+                (
+                    this.Metadata == other.Metadata ||
+                    this.Metadata.Equals(other.Metadata)
                 );
         }
+        
 
         /// <summary>
         /// Gets the hash code
@@ -205,42 +417,53 @@ namespace MerchantApi.Model
             {
                 int hash = 41;
                 // Suitable nullity checks etc, of course :)
-                if (this.Reference != null)
-                    hash = hash * 59 + this.Reference.GetHashCode();
+                if (this.OrderId != null)
+                    hash = hash * 59 + this.OrderId.GetHashCode();
+                if (this.OrderNumber != null)
+                    hash = hash * 59 + this.OrderNumber.GetHashCode();
+                if (this.OrderStatus != null)
+                    hash = hash * 59 + this.OrderStatus.GetHashCode();
                 if (this.Amount != null)
                     hash = hash * 59 + this.Amount.GetHashCode();
-                if (this.Currency != null)
-                    hash = hash * 59 + this.Currency.GetHashCode();
+                if (this.Consumer != null)
+                    hash = hash * 59 + this.Consumer.GetHashCode();
+                if (this.Billing != null)
+                    hash = hash * 59 + this.Billing.GetHashCode();
                 if (this.Shipping != null)
                     hash = hash * 59 + this.Shipping.GetHashCode();
+                if (this.Description != null)
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Items != null)
                     hash = hash * 59 + this.Items.GetHashCode();
-                if (this.CartReference != null)
-                    hash = hash * 59 + this.CartReference.GetHashCode();
+                if (this.Merchant != null)
+                    hash = hash * 59 + this.Merchant.GetHashCode();
+                if (this.MerchantReference != null)
+                    hash = hash * 59 + this.MerchantReference.GetHashCode();
+                if (this.TaxAmount != null)
+                    hash = hash * 59 + this.TaxAmount.GetHashCode();
+                if (this.ShippingAmount != null)
+                    hash = hash * 59 + this.ShippingAmount.GetHashCode();
+                if (this.Token != null)
+                    hash = hash * 59 + this.Token.GetHashCode();
+                if (this.Promotions != null)
+                    hash = hash * 59 + this.Promotions.GetHashCode();
+                if (this.CapturedAmount != null)
+                    hash = hash * 59 + this.CapturedAmount.GetHashCode();
+                if (this.RefundedAmount != null)
+                    hash = hash * 59 + this.RefundedAmount.GetHashCode();
+                if (this.CreatedDateTime != null)
+                    hash = hash * 59 + this.CreatedDateTime.GetHashCode();
+                if (this.RedirectUrl != null)
+                    hash = hash * 59 + this.RedirectUrl.GetHashCode();
+                if (this.Metadata != null)
+                    hash = hash * 59 + this.Metadata.GetHashCode();
+
                 return hash;
             }
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         { 
-            // Reference (string) maxLength
-            if(this.Reference != null && this.Reference.Length > 200)
-            {
-                yield return new ValidationResult("Invalid value for Reference, length must be less than 200.", new [] { "Reference" });
-            }
-
-            // Amount (decimal?) minimum
-            if(this.Amount < (decimal?)0)
-            {
-                yield return new ValidationResult("Invalid value for Amount, must be a value greater than or equal to 0.", new [] { "Amount" });
-            }
-
-            // CartReference (string) maxLength
-            if(this.CartReference != null && this.CartReference.Length > 200)
-            {
-                yield return new ValidationResult("Invalid value for CartReference, length must be less than 200.", new [] { "CartReference" });
-            }
-
             yield break;
         }
     }

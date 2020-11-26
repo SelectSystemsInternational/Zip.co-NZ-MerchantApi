@@ -9,7 +9,6 @@ M:\Development\ZipPayNZ\MerchantApi\MerchantApi\obj\Debug\netstandard2.1\Merchan
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\bin\Debug\netstandard2.1\MerchantApi.deps.json
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\bin\Debug\netstandard2.1\MerchantApi.dll
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\bin\Debug\netstandard2.1\MerchantApi.pdb
-M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\obj\Debug\netstandard2.1\MerchantApi.csprojAssemblyReference.cache
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\obj\Debug\netstandard2.1\MerchantApi.AssemblyInfoInputs.cache
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\obj\Debug\netstandard2.1\MerchantApi.AssemblyInfo.cs
 M:\Production\GitRepos\ZipNZMerchantApi\MerchantApi\obj\Debug\netstandard2.1\MerchantApi.csproj.CoreCompileInputs.cache

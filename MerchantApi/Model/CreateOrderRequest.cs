@@ -55,13 +55,13 @@ namespace MerchantApi.Model
         public enum PaymentFlowEnum
         {
             /// <summary>
-            /// Enum Sku for "sku"
+            /// Enum Payment for "payment"
             /// </summary>
             [EnumMember(Value = "payment")]
             Payment,
 
             /// <summary>
-            /// Enum Tax for "tax"
+            /// Enum Authorization for "auth"
             /// </summary>
             [EnumMember(Value = "auth")]
             Authorization
@@ -96,10 +96,10 @@ namespace MerchantApi.Model
         /// <param name="Pairing">Pairing.</param>
         /// <param name="PaymentFlow">PaymentFlow.</param>
         /// <param name="Metadata">Metadata.</param>
-        public CreateOrderRequest(TypeEnum? ProductType = default(TypeEnum?), decimal? Amount = default(decimal?), Consumer Consumer = default(Consumer), Address Billing = default(Address), 
-            Address Shipping = default(Address), string Description = default(string), List<OrderItem> Items = default(List<OrderItem>), Merchant Merchant = default(Merchant), 
+        public CreateOrderRequest(TypeEnum? ProductType = default(TypeEnum?), decimal? Amount = default(decimal?), Consumer Consumer = default(Consumer), OrderAddress Billing = default(OrderAddress), 
+            OrderAddress Shipping = default(OrderAddress), string Description = default(string), List<OrderItem> Items = default(List<OrderItem>), Merchant Merchant = default(Merchant), 
             string MerchantReference = default(string), decimal? TaxAmount = default(decimal?), decimal? ShippingAmount = default(decimal?), 
-            string Token = default(string), string[] Promotions = default(string[]), Pairing Pairing = default(Pairing), PaymentFlowEnum? PaymentFlow = default(PaymentFlowEnum?), 
+            string Token = default(string), string[] Promotions = default(string[]), Pairing Pairing = default(Pairing), PaymentFlowEnum PaymentFlow = default(PaymentFlowEnum), 
             Metadata Metadata = default(Metadata))
         {
             // to ensure "Description" is required (not null)
@@ -119,6 +119,12 @@ namespace MerchantApi.Model
             else
             {
                 this.MerchantReference = MerchantReference;
+            }      
+            // Set PaymentFlow text value
+            this.PaymentFlow = "payment";
+            if (PaymentFlow == PaymentFlowEnum.Authorization)
+            {
+                this.PaymentFlow = "auth";
             }
             this.ProductType = ProductType;
             this.Amount = Amount;
@@ -132,9 +138,7 @@ namespace MerchantApi.Model
             this.Token = Token;
             this.Promotions = Promotions;
             this.Pairing = Pairing;
-            this.PaymentFlow = PaymentFlow;
             this.Metadata = Metadata;
-
         }
 
         /// <summary>
@@ -146,12 +150,12 @@ namespace MerchantApi.Model
         /// Gets or Sets Billing Address
         /// </summary>
         [DataMember(Name= "billing", EmitDefaultValue=false)]
-        public Address Billing { get; set; }
+        public OrderAddress Billing { get; set; }
         /// <summary>
         /// Gets or Sets Shipping Address;
         /// </summary>
         [DataMember(Name = "shipping", EmitDefaultValue = false)]
-        public Address Shipping { get; set; }
+        public OrderAddress Shipping { get; set; }
         /// <summary>
         /// Gets or Sets Token
         /// </summary>
@@ -206,7 +210,7 @@ namespace MerchantApi.Model
         /// Gets or Sets PaymentFlow
         /// </summary>
         [DataMember(Name = "paymentFlow", EmitDefaultValue = false)]
-        PaymentFlowEnum? PaymentFlow { get; set; }
+        string PaymentFlow { get; set; }
         /// <summary>
         /// Gets or Sets Metadata
         /// </summary>

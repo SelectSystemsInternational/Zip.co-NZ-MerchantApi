@@ -28,7 +28,7 @@ namespace MerchantApi.Model
         [JsonConstructorAttribute]
         protected OrderCreateResponse() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Order" /> class.
+        /// Initializes a new instance of the <see cref="CheckoutOrder" /> class.
         /// </summary>
         /// <param name="Token">Token (required).</param>
         /// <param name="ExpiryDateTime">ExpiryDateTime (required).</param>
@@ -126,7 +126,7 @@ namespace MerchantApi.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Order {\n");
+            sb.Append("class OrderCreateResponse {\n");
             sb.Append("  Token: ").Append(Token).Append("\n");
             sb.Append("  ExpiryDateTime: ").Append(ExpiryDateTime).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");

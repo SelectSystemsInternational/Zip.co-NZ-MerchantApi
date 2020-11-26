@@ -229,7 +229,6 @@ namespace MerchantApi.Model
                 ) && 
                 (
                     this.Quantity == other.Quantity ||
-                    this.Quantity != null &&
                     this.Quantity.Equals(other.Quantity)
                 ) && 
                 (
@@ -256,10 +255,8 @@ namespace MerchantApi.Model
                     hash = hash * 59 + this.Name.GetHashCode();
                 if (this.Sku != null)
                     hash = hash * 59 + this.Sku.GetHashCode();
-                if (this.Price != null)
-                    hash = hash * 59 + this.Price.GetHashCode();
-                if (this.Quantity != null)
-                    hash = hash * 59 + this.Quantity.GetHashCode();
+                hash = hash * 59 + this.Price.GetHashCode();
+                hash = hash * 59 + this.Quantity.GetHashCode();
                 if (this.Type != null)
                     hash = hash * 59 + this.Type.GetHashCode();
                 return hash;

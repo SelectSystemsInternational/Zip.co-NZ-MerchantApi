@@ -31,9 +31,9 @@ namespace MerchantApi.Api
         /// Creates a zipMoney checkout.  During the checkout process a customer can apply for credit decisioning in real-time. This means the checkout needs to represent a good picture of known customer details along with order information and the checkout entity represents this as a resource.  For more information on how to checkout with zipMoney see the #model:Z2QcrzRGHACY8wM6G guide.
         /// </remarks>
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body"> (optional)</param>
+        /// <param name="apiIdentifier">apiIdentifier</param>
         /// <returns>Checkout</returns>
-        AccessToken AuthorizationCreateToken();
+        AccessToken AuthorizationCreateToken(string apiIdentifier);
 
         /// <summary>
         /// Create a checkout
@@ -199,15 +199,15 @@ namespace MerchantApi.Api
         /// <exception cref="MerchantApi.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"> (optional)</param>
         /// <returns>Checkout</returns>
-        public AccessToken AuthorizationCreateToken()
+        public AccessToken AuthorizationCreateToken(string apiIdentifier)
         {
             this.Configuration.Timeout = 15000; //15 Seconds
             this.Configuration.DefaultHeader.Add("Content-Type", "application/json");
 
-            var authorityRequest = new AuthorityRequest(AuthorityRequest.TypeEnum.ClientCredentials, "https://auth-dev.partpay.co.nz",
+            var authorityRequest = new AuthorityRequest(AuthorityRequest.TypeEnum.ClientCredentials, apiIdentifier,
                 this.Configuration.ClientId, this.Configuration.ClientSecret);
 
-            ApiResponse <AccessToken> localVarResponse = AuthorizationCreateWithHttpInfo(authorityRequest);
+            ApiResponse<AccessToken> localVarResponse = AuthorizationCreateWithHttpInfo(authorityRequest);
             if ((System.Net.HttpStatusCode)localVarResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Configuration.AccessToken = localVarResponse.Data;

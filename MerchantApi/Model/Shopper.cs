@@ -80,7 +80,7 @@ namespace MerchantApi.Model
         /// <param name="Gender">The shopper&#39;s gender.</param>
         /// <param name="Statistics">Statistics.</param>
         /// <param name="BillingAddress">BillingAddress (required).</param>
-        public Shopper(string Title = default(string), string FirstName = default(string), string LastName = default(string), string MiddleName = default(string), string Phone = default(string), string Email = default(string), DateTime? BirthDate = default(DateTime?), GenderEnum? Gender = default(GenderEnum?), ShopperStatistics Statistics = default(ShopperStatistics), Address BillingAddress = default(Address))
+        public Shopper(string Title = default(string), string FirstName = default(string), string LastName = default(string), string MiddleName = default(string), string Phone = default(string), string Email = default(string), DateTime? BirthDate = default(DateTime?), GenderEnum? Gender = default(GenderEnum?), ShopperStatistics Statistics = default(ShopperStatistics), OrderAddress BillingAddress = default(OrderAddress))
         {
             // to ensure "FirstName" is required (not null)
             if (FirstName == null)
@@ -177,7 +177,7 @@ namespace MerchantApi.Model
         /// Gets or Sets BillingAddress
         /// </summary>
         [DataMember(Name="billing_address", EmitDefaultValue=false)]
-        public Address BillingAddress { get; set; }
+        public OrderAddress BillingAddress { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>

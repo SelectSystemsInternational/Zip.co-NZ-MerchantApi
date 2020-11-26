@@ -74,7 +74,7 @@ namespace MerchantApi.Test
             instance.Configuration.ClientId = "VxBHMqt9aI4cPHjRBBmLt1Orw6xkk63n";
             instance.Configuration.ClientSecret = "o7fNo_1vfSDYUyMA_ZD2sVqxAiO-oeEkYo2FDQhiyUdeJ-8-rx91wRrUkUEJmgEe";
 
-            var response = instance.AuthorizationCreateToken();
+            var response = instance.AuthorizationCreateToken("https://auth-dev.partpay.co.nz");
 
             Assert.IsInstanceOf<AccessToken> (response, "response is AccessToken");
         }

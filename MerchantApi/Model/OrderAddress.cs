@@ -22,15 +22,15 @@ namespace MerchantApi.Model
     /// The address object
     /// </summary>
     [DataContract]
-    public partial class Address :  IEquatable<Address>, IValidatableObject
+    public partial class OrderAddress :  IEquatable<OrderAddress>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Address" /> class.
+        /// Initializes a new instance of the <see cref="OrderAddress" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected Address() { }
+        protected OrderAddress() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Address" /> class.
+        /// Initializes a new instance of the <see cref="OrderAddress" /> class.
         /// </summary>
         /// <param name="AddressLine1">The first line in the address (required).</param>
         /// <param name="AddressLine2">The (optional) second address line.</param>
@@ -39,7 +39,7 @@ namespace MerchantApi.Model
         /// <param name="PostalCode">The post or zip code (required).</param>
         /// <param name="State">The state or province (required).</param>
 
-        public Address(string AddressLine1 = default(string), string AddressLine2 = default(string), string Suburb = default(string), string City = default(string), string PostCode = default(string), string State = default(string))
+        public OrderAddress(string AddressLine1 = default(string), string AddressLine2 = default(string), string Suburb = default(string), string City = default(string), string PostCode = default(string), string State = default(string))
         {
             // to ensure "Line1" is required (not null)
             if (AddressLine1 == null)
@@ -49,15 +49,6 @@ namespace MerchantApi.Model
             else
             {
                 this.AddressLine1 = AddressLine1;
-            }
-            // to ensure "Suburb" is required (not null)
-            if (Suburb == null)
-            {
-                throw new InvalidDataException("Suburb is a required property for Address and cannot be null");
-            }
-            else
-            {
-                this.Suburb = City;
             }
             // to ensure "City" is required (not null)
             if (City == null)
@@ -87,6 +78,7 @@ namespace MerchantApi.Model
                 this.State = State;
             }
             this.AddressLine2 = AddressLine2;
+            this.Suburb = Suburb;
         }
         
         /// <summary>
@@ -160,7 +152,7 @@ namespace MerchantApi.Model
         public override bool Equals(object obj)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
-            return this.Equals(obj as Address);
+            return this.Equals(obj as OrderAddress);
         }
 
         /// <summary>
@@ -168,7 +160,7 @@ namespace MerchantApi.Model
         /// </summary>
         /// <param name="other">Instance of Address to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Address other)
+        public bool Equals(OrderAddress other)
         {
             // credit: http://stackoverflow.com/a/10454552/677735
             if (other == null)
